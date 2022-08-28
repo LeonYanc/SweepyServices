@@ -24,7 +24,4 @@ public class randomConverter {
         return "" + key;
     }
 
-    public String decode(String shortUrl) {
-        return map.get(Integer.parseInt(shortUrl.replace("http://www.sweepy.com/", "")));
-    }
 }

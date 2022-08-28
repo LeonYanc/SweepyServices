@@ -39,16 +39,5 @@ public class base62Converter {
         this.hm.put(shortUrl, longUrl);
         return shortUrl;
     }
-
-
-    public String decode(String shortUrl) {
-
-        // **** sanity check(s) ****
-        if (shortUrl.equals(""))
-            return "";
-
-        // **** return longUrl ****
-        return this.hm.get(shortUrl);
-    }
 }
 

@@ -1,2 +1,4 @@
-package com.sweepy.RedisCache;public class redisServiceImpl {
+package com.sweepy.RedisCache;
+
+public class redisServiceImpl {
 }

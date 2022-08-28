@@ -1,2 +1,4 @@
-package com.sweepy.RedisCache;public interface redisService {
+package com.sweepy.RedisCache;
+
+public interface redisService {
 }

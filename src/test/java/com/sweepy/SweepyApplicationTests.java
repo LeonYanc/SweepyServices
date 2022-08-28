@@ -1,15 +1,21 @@
 package com.sweepy;
 
-import com.sweepy.repository.UrlRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import redis.clients.jedis.Jedis;
 
 @SpringBootTest
 class SweepyApplicationTests {
     @Test
     void contextLoads() {
+    }
+
+    @Test
+    void testRedis() {
+        Jedis jedis = new Jedis("localhost", 6379);
+        jedis.auth("mypass");
+        System.out.println("Connected to Redis");
+
     }
 
 }
