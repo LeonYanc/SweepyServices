@@ -1,12 +1,12 @@
 package com.sweepy.controller;
 
-import com.sweepy.database.urlTable;
 import com.sweepy.exception.nullRequest;
-import com.sweepy.service.urlService;
+import com.sweepy.urlService.urlService;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
 public class controller {
@@ -18,12 +18,13 @@ public class controller {
     }
     @PostMapping("/longToShort")
     public String longtoShort(@Param("method") String method, @Param("url") String url) {
-        return urlService.longToShort(url, method);
+        return  urlService.longToShort(url, method);
     }
 
-    @GetMapping("/shortToLong")
-    public String shortToLong(@Param("url") String url) throws nullRequest {
-        return urlService.shortToLong(url);
+    @GetMapping("/goto")
+    public String shortToLong(@Param("url") String url, HttpServletResponse response) throws nullRequest, IOException {
+
+        return urlService.shortToLong(url, response);
     }
 
 

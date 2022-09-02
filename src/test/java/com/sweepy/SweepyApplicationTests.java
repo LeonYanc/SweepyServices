@@ -1,21 +1,25 @@
 package com.sweepy;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import redis.clients.jedis.Jedis;
 
 @SpringBootTest
 class SweepyApplicationTests {
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
     @Test
     void contextLoads() {
     }
 
     @Test
     void testRedis() {
-        Jedis jedis = new Jedis("localhost", 6379);
-        jedis.auth("mypass");
-        System.out.println("Connected to Redis");
 
-    }
+            redisTemplate.opsForValue().set("name","dadadingdada!");
+            System.out.println(redisTemplate.opsForValue().get("name"));
+        }
+
 
 }
