@@ -54,16 +54,18 @@ public class urlServiceImpl implements urlService {
             if (!isValid(protocol + longUrl)) {
                 return "You must enter a valid long Url.";
             } else if (entry == null || !Objects.equals(entry.getMethod(), method)) {
+                SequenceIdService ser = new SequenceIdService(redisTemplateId);
+                Long Id = ser.getNextSequenceIdbyAtomic();
                 if (Objects.equals(method, "base62")) {
-                    shortUrl = base62Converter.encode(longUrl);
+                    shortUrl = base62Converter.encode(Math.toIntExact(Id));
                 } else if (Objects.equals(method, "random")) {
                     shortUrl = randomConverter.encode(longUrl);
                 } else {
                     return "Please enter a valid encode method.";
                 }
 
-                SequenceIdService ser = new SequenceIdService(redisTemplateId);
-                Long Id = ser.getNextSequenceByLua();
+
+
                 entry = new urlTable(Id,longUrl, shortUrl, method);
 
                 saveToRedis(longUrl, shortUrl, defaultTime);

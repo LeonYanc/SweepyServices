@@ -12,26 +12,4 @@ import redis.clients.jedis.Jedis;
 
 @SpringBootTest
 class SweepyApplicationTests {
-
-    @Mock
-    private RedisTemplate<String, Long> redisTemplateId;
-
-    @Autowired
-    @Qualifier("counterScript")
-    private RedisScript<Long> redisCounterScript;
-
-    @Test
-    void contextLoads() {
-    }
-
-    @Test
-    void testRedis() {
-
-        SequenceIdService ser = new SequenceIdService(redisTemplateId);
-        Long Id = ser.getNextSequenceByLua();
-        //Long Id = ser.getNextSequenceIdbyAtomic();
-        System.out.println(Id);
-        }
-
-
 }
