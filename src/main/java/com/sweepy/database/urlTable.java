@@ -10,7 +10,7 @@ public class urlTable {
 
     }
 
-    public urlTable(String longUrl, String shortUrl, String method) {
+    public urlTable(Long id, String longUrl, String shortUrl, String method) {
         this.method = method;
         this.id = id;
         this.longUrl = longUrl;
@@ -19,8 +19,7 @@ public class urlTable {
 
     @Id
     @Column(name="urlId")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @Column(name = "longUrl")
     private String longUrl;
     @Column(name = "shortUrl")
@@ -31,12 +30,12 @@ public class urlTable {
 
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id = Long.valueOf(id);
     }
 
     public String getLongUrl() {

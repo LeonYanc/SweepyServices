@@ -1,15 +1,25 @@
 package com.sweepy;
 
+import com.sweepy.RedisCache.SequenceIdService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.script.RedisScript;
 import redis.clients.jedis.Jedis;
 
 @SpringBootTest
 class SweepyApplicationTests {
+
+    @Mock
+    private RedisTemplate<String, Long> redisTemplateId;
+
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    @Qualifier("counterScript")
+    private RedisScript<Long> redisCounterScript;
+
     @Test
     void contextLoads() {
     }
@@ -17,8 +27,10 @@ class SweepyApplicationTests {
     @Test
     void testRedis() {
 
-            redisTemplate.opsForValue().set("name","dadadingdada!");
-            System.out.println(redisTemplate.opsForValue().get("name"));
+        SequenceIdService ser = new SequenceIdService(redisTemplateId);
+        Long Id = ser.getNextSequenceByLua();
+        //Long Id = ser.getNextSequenceIdbyAtomic();
+        System.out.println(Id);
         }
 
 

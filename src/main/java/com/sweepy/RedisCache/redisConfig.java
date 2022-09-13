@@ -2,8 +2,11 @@ package com.sweepy.RedisCache;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
@@ -18,4 +21,17 @@ public class redisConfig {
 
         return template;
     }
+
+    @Bean
+    public RedisTemplate<String, Long> redisIdTemplate(RedisConnectionFactory redisConnectionFactory){
+
+        RedisTemplate<String, Long> template = new RedisTemplate<String, Long>();
+        template.setConnectionFactory(redisConnectionFactory);
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new StringRedisSerializer());
+
+        return template;
+    }
+
+
 }

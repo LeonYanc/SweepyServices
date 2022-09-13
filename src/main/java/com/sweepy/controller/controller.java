@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@CrossOrigin("http://localhost:3000")
 @RestController
 public class controller {
 

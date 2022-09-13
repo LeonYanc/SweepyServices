@@ -1,5 +1,6 @@
 package com.sweepy.urlService;
 
+import com.sweepy.RedisCache.SequenceIdService;
 import com.sweepy.RedisCache.redisService;
 import com.sweepy.converter.base62Converter;
 import com.sweepy.converter.randomConverter;
@@ -9,6 +10,7 @@ import com.sweepy.exception.nullRequest;
 import com.sweepy.repository.urlRepository;
 import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,10 +24,11 @@ public class urlServiceImpl implements urlService {
 
     @Autowired
     private urlRepository urlRepository;
+    @Autowired
+    private RedisTemplate<String, Long> redisTemplateId;
     private redisService redisService;
     long defaultTime = 5;
 
-    private String prefix = "http://www.sweepy.com/";
     private String protocol = "http://";
 
 
@@ -58,21 +61,24 @@ public class urlServiceImpl implements urlService {
                 } else {
                     return "Please enter a valid encode method.";
                 }
-                entry = new urlTable(longUrl, shortUrl, method);
+
+                SequenceIdService ser = new SequenceIdService(redisTemplateId);
+                Long Id = ser.getNextSequenceByLua();
+                entry = new urlTable(Id,longUrl, shortUrl, method);
 
                 saveToRedis(longUrl, shortUrl, defaultTime);
                 urlRepository.save(entry);
-                return prefix + shortUrl;
+                return shortUrl;
             } else {
 
                 shortUrl = entry.getShortUrl();
                 saveToRedis(longUrl, shortUrl, defaultTime);
-                return prefix + shortUrl;
+                return shortUrl;
             }
         } else {
             if (isValid(protocol + longUrl)) {
                 redisService.expire(longUrl, defaultTime);
-                return prefix + shortInRedis;
+                return shortInRedis;
             }
             return "You must enter a valid long Url.";
 
