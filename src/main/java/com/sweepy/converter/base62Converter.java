@@ -17,26 +17,16 @@ public class base62Converter {
         this.map    = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
     }
 
-    public String encode(String longUrl) {
-
-
-
-        if (longUrl.equals(""))
-            return "";
+    public String encode(Integer Id) {
 
         StringBuilder sb = new StringBuilder();
-        int sum = 0;
 
-        for (char c : longUrl.toCharArray())
-            sum += c;
-
-        while (sum > 0) {
-            sb.append(map[sum % 62]);
-            sum /= 62;
+        while (Id > 0) {
+            sb.append(map[Id % 62]);
+            Id /= 62;
         }
 
         String shortUrl = sb.toString();
-        this.hm.put(shortUrl, longUrl);
         return shortUrl;
     }
 }
