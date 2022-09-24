@@ -22,7 +22,7 @@ import java.util.Set;
 
 public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
 
-	
+	private String JWT;
 	@Override
 	public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -43,9 +43,9 @@ public class JWTTokenGeneratorFilter extends OncePerRequestFilter {
 
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
-		return !request.getServletPath().equals("/longToShort");
+		return !(request.getServletPath().equals("/login") | request.getServletPath().equals("/signup"));
 	}
-	
+
 	private String populateAuthorities(Collection<? extends GrantedAuthority> collection) {
 		Set<String> authoritiesSet = new HashSet<>();
         for (GrantedAuthority authority : collection) {

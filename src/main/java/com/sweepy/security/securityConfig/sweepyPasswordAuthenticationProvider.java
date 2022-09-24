@@ -29,11 +29,11 @@ public class sweepyPasswordAuthenticationProvider implements AuthenticationProvi
     public Authentication authenticate(Authentication authentication) {
         String username = authentication.getName();
         String pwd = authentication.getCredentials().toString();
-        List<user> customer = userRepository.findByUsername(username);
-        if (customer.size() > 0) {
-            if (passwordEncoder.matches(pwd, customer.get(0).getPassword())) {
+        user customer = userRepository.findByUsername(username);
+        if (customer != null ) {
+            if (passwordEncoder.matches(pwd, customer.getPassword())) {
                 List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority(customer.get(0).getRole()));
+                authorities.add(new SimpleGrantedAuthority(customer.getRole()));
                 return new UsernamePasswordAuthenticationToken(username, pwd, authorities);
             } else {
                 throw new BadCredentialsException("Invalid password!");

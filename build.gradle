@@ -41,6 +41,7 @@ dependencies {
     implementation 'org.flywaydb:flyway-core'
      runtimeOnly 'org.flywaydb:flyway-mysql'
 
+    implementation 'org.springframework.security:spring-security-core:5.7.3'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.ldap:spring-ldap-core:2.4.1'
