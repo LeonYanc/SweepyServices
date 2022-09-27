@@ -50,8 +50,8 @@ public class ProjectSecurityConfig {
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests((auth) -> auth
-                        .antMatchers("/signup").permitAll()
-                        .antMatchers("/goto","/longToShort", "/login").authenticated()
+                        .antMatchers("/signup", "/goto").permitAll()
+                        .antMatchers("/longToShort", "/login").authenticated()
                 ).httpBasic(Customizer.withDefaults());
         return http.build();
 

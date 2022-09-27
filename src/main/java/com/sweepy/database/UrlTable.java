@@ -4,13 +4,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "urls")
-public class urlTable {
+public class UrlTable {
 
-    public urlTable() {
+    public UrlTable() {
 
     }
 
-    public urlTable(Long id, String longUrl, String shortUrl, String method) {
+    public UrlTable(Long id, String longUrl, String shortUrl, String method) {
         this.method = method;
         this.id = id;
         this.longUrl = longUrl;

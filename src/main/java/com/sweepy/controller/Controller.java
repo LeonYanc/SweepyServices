@@ -1,24 +1,23 @@
 package com.sweepy.controller;
 
-import com.sweepy.urlService.urlService;
-import com.sweepy.userService.userService;
+import com.sweepy.urlService.UrlService;
+import com.sweepy.userService.UserService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
-import javax.lang.model.util.Elements;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000"}, allowCredentials = "true")
-public class controller {
+public class Controller {
 
-    private urlService urlService;
+    private UrlService urlService;
 
-    private userService userService;
+    private UserService userService;
 
-    public controller (urlService urlService, userService userService) {
+    public Controller(UrlService urlService, UserService userService) {
         this.urlService = urlService;
         this.userService = userService;
     }

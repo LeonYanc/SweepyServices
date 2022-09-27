@@ -1,7 +1,7 @@
 package com.sweepy.security.securityConfig;
 
-import com.sweepy.database.user;
-import com.sweepy.repository.userRepository;
+import com.sweepy.database.User;
+import com.sweepy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,10 +17,10 @@ import java.util.List;
 
 
 @Component
-public class sweepyPasswordAuthenticationProvider implements AuthenticationProvider {
+public class SweepyPasswordAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private userRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -29,7 +29,7 @@ public class sweepyPasswordAuthenticationProvider implements AuthenticationProvi
     public Authentication authenticate(Authentication authentication) {
         String username = authentication.getName();
         String pwd = authentication.getCredentials().toString();
-        user customer = userRepository.findByUsername(username);
+        User customer = userRepository.findByUsername(username);
         if (customer != null ) {
             if (passwordEncoder.matches(pwd, customer.getPassword())) {
                 List<GrantedAuthority> authorities = new ArrayList<>();

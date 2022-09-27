@@ -1,7 +1,7 @@
 package com.sweepy.userService;
 
-import com.sweepy.database.user;
-import com.sweepy.repository.userRepository;
+import com.sweepy.database.User;
+import com.sweepy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,10 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class userServiceImpl implements userService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
-    private userRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -29,7 +29,7 @@ public class userServiceImpl implements userService {
             System.out.println(userRepository.findByUsername(username));
             return "the username has already been taken, please choose another one or login";
         }
-        user tmp = new user(username, passwordEncoder.encode(password), "user");
+        User tmp = new User(username, passwordEncoder.encode(password), "user");
 
         userRepository.save(tmp);
         return " Registered Successfully";
