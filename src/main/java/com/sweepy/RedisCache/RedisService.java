@@ -1,6 +1,6 @@
 package com.sweepy.RedisCache;
 
-public interface redisService {
+public interface RedisService {
 
     void setLTS(String longUrl, String shortUrl, long time);
 

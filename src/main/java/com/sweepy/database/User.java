@@ -1,12 +1,10 @@
 package com.sweepy.database;
 
-import io.lettuce.core.dynamic.annotation.CommandNaming;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
-public class user {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +19,11 @@ public class user {
     private String role;
 
 
-    public user() {
+    public User() {
 
     }
 
-    public user(String username, String password, String role) {
+    public User(String username, String password, String role) {
         this.username = username;
         this.password = password;
         this.role = role;

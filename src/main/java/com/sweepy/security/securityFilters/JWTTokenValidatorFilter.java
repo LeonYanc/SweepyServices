@@ -30,7 +30,7 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 			try {
 				SecretKey key = Keys.hmacShaKeyFor(
 						SecurityConstants.JWT_KEY.getBytes(StandardCharsets.UTF_8));
-				
+
 				Claims claims = Jwts.parserBuilder()
 						.setSigningKey(key)
 						.build()
@@ -44,14 +44,14 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 			}catch (Exception e) {
 				throw new BadCredentialsException("Invalid Token received!");
 			}
-			
+
 		}
 		chain.doFilter(request, response);
 	}
 
-	
+
 	  @Override protected boolean shouldNotFilter(HttpServletRequest request) {
-	  return request.getServletPath().equals("/longToShort"); }
-	 
-	
+	  return (request.getServletPath().equals("/login") | request.getServletPath().equals("/signup")); }
+
+
 }

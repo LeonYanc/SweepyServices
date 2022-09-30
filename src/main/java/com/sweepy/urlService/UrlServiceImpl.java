@@ -1,13 +1,13 @@
 package com.sweepy.urlService;
 
 import com.sweepy.RedisCache.SequenceIdService;
-import com.sweepy.RedisCache.redisService;
-import com.sweepy.converter.base62Converter;
-import com.sweepy.converter.randomConverter;
-import com.sweepy.database.urlTable;
-import com.sweepy.exception.emptyEntry;
-import com.sweepy.exception.nullRequest;
-import com.sweepy.repository.urlRepository;
+import com.sweepy.RedisCache.RedisService;
+import com.sweepy.converter.Base62Converter;
+import com.sweepy.converter.RandomConverter;
+import com.sweepy.database.UrlTable;
+import com.sweepy.exception.EmptyEntry;
+import com.sweepy.exception.NullRequest;
+import com.sweepy.repository.UrlRepository;
 import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,27 +16,26 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Objects;
 
 @Service
-public class urlServiceImpl implements urlService {
+public class UrlServiceImpl implements UrlService {
 
     @Autowired
-    private urlRepository urlRepository;
+    private UrlRepository urlRepository;
     @Autowired
     private RedisTemplate<String, Long> redisTemplateId;
-    private redisService redisService;
+    private RedisService redisService;
     long defaultTime = 5;
 
     private String protocol = "http://";
 
 
-    private base62Converter base62Converter = new base62Converter();
-    private randomConverter randomConverter = new randomConverter();
+    private Base62Converter base62Converter = new Base62Converter();
+    private RandomConverter randomConverter = new RandomConverter();
 
 
-    public urlServiceImpl(urlRepository urlRepository, redisService redisService) {
+    public UrlServiceImpl(UrlRepository urlRepository, RedisService redisService) {
         this.urlRepository = urlRepository;
         this.redisService = redisService;
     }
@@ -45,7 +44,7 @@ public class urlServiceImpl implements urlService {
     @Transactional
     public String longToShort(String longUrl, String method) {
         String shortUrl = "";
-        urlTable entry = null;
+        UrlTable entry = null;
 
         String shortInRedis = (String) redisService.get(longUrl);
         if (shortInRedis == null) {
@@ -66,7 +65,7 @@ public class urlServiceImpl implements urlService {
 
 
 
-                entry = new urlTable(Id,longUrl, shortUrl, method);
+                entry = new UrlTable(Id,longUrl, shortUrl, method);
 
                 saveToRedis(longUrl, shortUrl, defaultTime);
                 urlRepository.save(entry);
@@ -91,7 +90,7 @@ public class urlServiceImpl implements urlService {
     @Override
     @Transactional
     public String shortToLong(String shortUrl, HttpServletResponse response) throws IOException {
-        urlTable entry;
+        UrlTable entry;
         String longUrl;
 
         String longInRedis = (String) redisService.get(shortUrl);
@@ -102,11 +101,11 @@ public class urlServiceImpl implements urlService {
             try {
                 entry = urlRepository.findByShortUrl(shortUrl);
                 if (shortUrl == "") {
-                    throw new emptyEntry("You must enter a valid short Url.");
+                    throw new EmptyEntry("You must enter a valid short Url.");
 
                 }
                 if (entry == null) {
-                    throw new nullRequest("The short Url: " + shortUrl + " is invalid");
+                    throw new NullRequest("The short Url: " + shortUrl + " is invalid");
                 }
                 longUrl = protocol + entry.getLongUrl();
                 if (isValid(longUrl)) {
@@ -114,7 +113,7 @@ public class urlServiceImpl implements urlService {
                     saveToRedis(entry.getLongUrl(), shortUrl, defaultTime);
                 }
 
-            } catch (nullRequest | emptyEntry | IOException e) {
+            } catch (NullRequest | EmptyEntry | IOException e) {
                 return e.getMessage();
             }
         } else {

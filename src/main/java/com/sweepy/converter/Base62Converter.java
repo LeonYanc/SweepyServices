@@ -3,16 +3,14 @@ package com.sweepy.converter;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 
 @Component
-public class base62Converter {
+public class Base62Converter {
 
     HashMap<String, String> hm = null;
     char map[] = null;
 
-    public base62Converter() {
+    public Base62Converter() {
         this.hm     = new HashMap<>();
         this.map    = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
     }

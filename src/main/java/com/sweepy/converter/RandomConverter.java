@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class randomConverter {
+public class RandomConverter {
 
     Map<Integer, String> map = null;
     Random r = null;
-    public randomConverter() {
+    public RandomConverter() {
         this.map= new HashMap<>();
         this.r = new Random();
     }
