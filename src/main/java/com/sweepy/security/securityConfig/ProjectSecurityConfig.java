@@ -50,8 +50,8 @@ public class ProjectSecurityConfig {
                         return config;
                     }
                 }).and().csrf().disable()
-                .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
-                .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+//                .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
+//                .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests((auth) -> auth
                         .antMatchers("/signup", "/goto").permitAll()
                         .antMatchers("/longToShort", "/login", "/test").authenticated()
