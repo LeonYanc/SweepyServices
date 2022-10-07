@@ -11,9 +11,15 @@ public class ScriptConfig {
     public ScriptConfig () {
 
     }
-    @Bean(name="counterScript")
+    @Bean
     public RedisScript<Long> counterScript() {
         Resource scriptSource = new ClassPathResource("redisCounter.lua");
         return RedisScript.of(scriptSource, long.class);
+    }
+
+    @Bean
+    public RedisScript<Long> limiterScript() {
+        Resource scriptSource = new ClassPathResource("redisLimiter.lua");
+        return RedisScript.of(scriptSource, Long.class);
     }
 }

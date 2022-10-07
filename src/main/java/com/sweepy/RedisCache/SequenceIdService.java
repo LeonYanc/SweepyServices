@@ -17,8 +17,9 @@ public class SequenceIdService {
 
     private String SEQUENCE_ID = "Sequence_ID";
 
-    private ScriptConfig config = new ScriptConfig();
-    private RedisScript<Long> redisCounterScript = config.counterScript();
+    @Autowired
+    @Qualifier("counterScript")
+    private RedisScript<Long> redisCounterScript;
 
     private RedisAtomicLong entityCounter;
     private RedisTemplate<String, Long> sequenceIdTemplate;

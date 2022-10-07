@@ -1,5 +1,6 @@
 package com.sweepy.controller;
 
+import com.sweepy.rateLimit.RateLimit;
 import com.sweepy.urlService.UrlService;
 import com.sweepy.userService.UserService;
 import org.springframework.data.repository.query.Param;
@@ -26,6 +27,7 @@ public class Controller {
         return  urlService.longToShort(url, method);
     }
 
+    @RateLimit(permitsPerSecond = 0.2)
     @RequestMapping("/goto")
     public String shortToLong(@Param("url") String url, HttpServletResponse response) throws IOException {
 
@@ -48,6 +50,11 @@ public class Controller {
         else {
             return "Wrong login credentials";
         }
+    }
+
+    @PostMapping("/test")
+    public String test() {
+        return "Keycloak Logged in";
     }
 
 
